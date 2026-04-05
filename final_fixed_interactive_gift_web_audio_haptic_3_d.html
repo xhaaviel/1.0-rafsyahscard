@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HBD Rafsyah‼️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body{margin:0;font-family:'Quicksand',sans-serif;background:#0f0f1a;color:white;overflow:hidden}
+.star{position:fixed;width:2px;height:2px;background:white;opacity:0.7;animation:twinkle 2s infinite alternate}
+@keyframes twinkle{from{opacity:0.2}to{opacity:1}}
+.hidden{display:none}
+.container{display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;text-align:center;transition:0.5s}
+.fade{opacity:0}
+.blur{filter:blur(6px)}
+.card{backdrop-filter: blur(15px);background: rgba(255,255,255,0.08);border-radius:25px;padding:20px;width:320px;box-shadow:0 0 40px rgba(255,105,180,0.2)}
+.fade-card{opacity:0;animation:fadeInCard 0.8s forwards}
+@keyframes fadeInCard{to{opacity:1}}
+button{margin:5px;padding:12px 20px;border:none;border-radius:15px;background: linear-gradient(45deg,#ff6b81,#ff9a9e);color:white;cursor:pointer;font-family:'Nunito'}
+canvas{background:#000;border-radius:15px;margin-top:10px}
+.popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:rgba(0,0,0,0.9);padding:25px;border-radius:20px;text-align:center;transition:0.3s;z-index:10}
+.popup.show{transform:translate(-50%,-50%) scale(1)}
+#countdownText{font-size:60px;font-weight:bold}
+.scroll-3d{max-height:260px;overflow-y:auto;perspective:800px}
+.scroll-item{margin-bottom:15px;transition:transform 0.2s, opacity 0.2s}
+.scroll-item img{width:100%;border-radius:12px}
+.final-screen{position:fixed;top:0;left:0;width:100vw;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background: radial-gradient(circle,#1a1a2e,#000)}
+.confetti{position:fixed;width:6px;height:6px;top:-10px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(100vh) rotate(360deg)}}
+.tutorial{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);padding:10px 15px;border-radius:15px}
+</style>
+</head>
+<body>
+
+<div class="container" id="main">
+<div id="gameScreen" class="card">
+<h3>ayoo main dulu 🐍</h3>
+<p>skor kamu: <span id="score">0</span></p>
+<p>target: 5</p>
+<button onclick="startGame()">gass, mulai</button>
+<canvas id="gameCanvas" width="300" height="300"></canvas>
+</div>
+
+<div id="messageScreen" class="card hidden">
+<p id="message"></p>
+<button onclick="nextMessage()">Lanjut</button>
+</div>
+
+<div id="journalScreen" class="card hidden">
+<h4>aku nemu ini buat kamu 📄</h4>
+<div class="scroll-3d" id="scrollArea">
+<div class="scroll-item"><img src="project/img/img1.jpg"></div>
+<div class="scroll-item"><img src="project/img/img2.jpg"></div>
+<div class="scroll-item"><img src="project/img/img3.jpg"></div>
+</div>
+<p>ayo berhenti pelan-pelan yaa 🥲</p>
+<button onclick="finish()">▶️</button>
+</div>
+</div>
+
+<div id="tutorial" class="tutorial hidden">Swipe atau WASD / Arrow</div>
+<div id="popup" class="popup"><h3>yahh mati 😢</h3><button onclick="restart()">ulang</button></div>
+<div id="countdownPopup" class="popup"><div id="countdownText">3</div></div>
+
+<audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+<audio id="countSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+<audio id="goSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+
+// stars
+for(let i=0;i<80;i++){let s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';document.body.appendChild(s)}
+
+const clickSound=document.getElementById('clickSound');
+const countSound=document.getElementById('countSound');
+const goSound=document.getElementById('goSound');
+
+// AUDIO UNLOCK
+let audioUnlocked=false;
+function unlockAudio(){
+ if(audioUnlocked) return;
+ audioUnlocked=true;
+ [clickSound,countSound,goSound].forEach(a=>{
+  a.muted=true;
+  a.play().then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>{});
+ });
+}
+
+function safePlay(a){if(a&&audioUnlocked){a.currentTime=0;a.play().catch(()=>{})}}
+
+window.addEventListener("click",e=>{
+ unlockAudio();
+ if(e.target.tagName==='BUTTON') safePlay(clickSound);
+});
+
+function vibrate(ms=50){
+ if(navigator.vibrate) navigator.vibrate(ms);
+ else{
+  document.body.style.transform="translateX(3px)";
+  setTimeout(()=>document.body.style.transform="",80);
+ }
+}
+
+const canvas=document.getElementById('gameCanvas');
+const ctx=canvas.getContext('2d');
+const scoreEl=document.getElementById('score');
+const main=document.getElementById('main');
+const tutorial=document.getElementById('tutorial');
+
+let snake,dir,food,score,run=false;
+
+function startGame(){
+ unlockAudio();
+ tutorial.classList.remove('hidden');
+ setTimeout(()=>tutorial.classList.add('hidden'),2500);
+ snake=[{x:7,y:7}];dir={x:1,y:0};food=random();score=0;scoreEl.innerText=0;countdown();
+}
+window.startGame=startGame;
+
+function countdown(){
+ let c=3;let el=document.getElementById('countdownText');let pop=document.getElementById('countdownPopup');
+ pop.classList.add('show');
+ main.classList.add('blur');
+ let i=setInterval(()=>{
+  safePlay(countSound);vibrate(30);
+  c--;
+  if(c>0) el.innerText=c;
+  else if(c===0){el.innerText='GO!';safePlay(goSound);vibrate(80)}
+  else{
+    clearInterval(i);
+    pop.classList.remove('show');
+    main.classList.remove('blur');
+    setTimeout(()=>{run=true;loop()},100);
+  }
+ },800);
+}
+
+function random(){return{x:Math.floor(Math.random()*15),y:Math.floor(Math.random()*15)}}
+function loop(){if(!run)return;update();setTimeout(loop,150)}
+
+function update(){
+ let h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
+ if(h.x<0||h.y<0||h.x>14||h.y>14||snake.some(s=>s.x===h.x&&s.y===h.y)){
+  run=false;vibrate(200);
+  document.getElementById('popup').classList.add('show');return;
+ }
+ snake.unshift(h);
+ if(h.x===food.x&&h.y===food.y){score++;scoreEl.innerText=score;food=random()}else snake.pop();
+ draw();
+ if(score>=5){run=false;vibrate(120);confetti();setTimeout(()=>transition('messageScreen'),700)}
+}
+
+function draw(){ctx.fillStyle='#000';ctx.fillRect(0,0,300,300);ctx.font='18px Arial';ctx.fillText('🍎',food.x*20,food.y*20+15);snake.forEach(s=>{ctx.fillStyle='#0f0';ctx.fillRect(s.x*20,s.y*20,18,18)})}
+function restart(){document.getElementById('popup').classList.remove('show');startGame()}
+window.restart=restart;
+
+function setDirSafe(n){if(dir&&(dir.x+n.x===0&&dir.y+n.y===0))return;dir=n}
+
+window.addEventListener('keydown',e=>{
+ if(e.key==='ArrowUp'||e.key==='w') setDirSafe({x:0,y:-1});
+ if(e.key==='ArrowDown'||e.key==='s') setDirSafe({x:0,y:1});
+ if(e.key==='ArrowLeft'||e.key==='a') setDirSafe({x:-1,y:0});
+ if(e.key==='ArrowRight'||e.key==='d') setDirSafe({x:1,y:0});
+});
+
+const msgs=["YEAH kamu berhasil 🤩","selamat ulang tahun Rafsyah‼️","semoga makin keren","pokoknya all the best ✨"];
+let mi=0;
+
+function showMessage(t){document.getElementById('message').innerText=t}
+function nextMessage(){mi++;if(mi<msgs.length)showMessage(msgs[mi]);else transition('journalScreen')}
+window.nextMessage=nextMessage;
+
+function transition(target){
+ main.classList.add('fade');
+ setTimeout(()=>{
+  document.querySelectorAll('.card').forEach(c=>{c.classList.add('hidden');c.classList.remove('fade-card')});
+  const el=document.getElementById(target);
+  el.classList.remove('hidden');
+  el.classList.add('fade-card');
+  main.classList.remove('fade');
+  if(target==='messageScreen') showMessage(msgs[0]);
+ },500);
+}
+
+const scrollArea=document.getElementById('scrollArea');
+scrollArea.addEventListener('scroll',()=>{
+ const items=scrollArea.querySelectorAll('.scroll-item');
+ const center=scrollArea.scrollTop+scrollArea.clientHeight/2;
+ items.forEach(item=>{
+  const rect=item.offsetTop+item.clientHeight/2;
+  const dist=rect-center;
+  item.style.transform=`rotateX(${dist*0.05}deg) scale(${1-Math.min(Math.abs(dist)/600,0.3)})`;
+  item.style.opacity=1-Math.min(Math.abs(dist)/400,0.6);
+ });
+});
+
+function confetti(){
+ for(let i=0;i<100;i++){
+  let c=document.createElement('div');
+  c.className='confetti';
+  c.style.left=Math.random()*100+'vw';
+  c.style.background=`hsl(${Math.random()*360},100%,70%)`;
+  c.style.animationDuration=(Math.random()*3+2)+'s';
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),5000);
+ }
+}
+
+function finish(){
+ document.body.innerHTML=`<div class='final-screen' id='final'></div>`;
+ setTimeout(()=>{
+  document.getElementById('final').innerHTML=`<div style='font-size:22px'>semoga kamu suka yaa 💖</div><button onclick='location.reload()'>ulang 🎮</button>`;
+ },1200);
+}
+window.finish=finish;
+
+});
+</script>
+
+</body>
+</html>
