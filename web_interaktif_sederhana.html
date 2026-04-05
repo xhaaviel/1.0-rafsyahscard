@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You 💖</title>
+<title>HBD Rafsyah‼️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
 
@@ -57,10 +57,10 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 <div class="container" id="main">
 
 <div id="gameScreen" class="card">
-<h3>Main dulu 🐍</h3>
-<p>Skor: <span id="score">0</span></p>
-<p>Target: 5</p>
-<button onclick="startGame()">Mulai</button>
+<h3>ayoo main dulu 🐍</h3>
+<p>skor kamu: <span id="score">0</span></p>
+<p>target: 5</p>
+<button onclick="startGame()">gass, mulai</button>
 <canvas id="gameCanvas" width="300" height="300"></canvas>
 </div>
 
@@ -70,7 +70,7 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 </div>
 
 <div id="journalScreen" class="card hidden">
-<h4>Aku nemu ini buat kamu 📄</h4>
+<h4>aku nemu ini buat kamu 📄</h4>
 
 <div class="scroll-3d" id="scrollArea">
   <div class="scroll-item"><img src="img1.jpg"></div>
@@ -78,7 +78,7 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
   <div class="scroll-item"><img src="img3.jpg"></div>
 </div>
 
-<button onclick="finish()">Lanjut 💖</button>
+<button onclick="finish()">lanjut 💫</button>
 </div>
 
 </div>
@@ -86,8 +86,8 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 <div id="tutorial" class="tutorial hidden">Swipe ke atas, bawah, kiri, kanan</div>
 
 <div id="popup" class="popup">
-<h3>Game Over 😢</h3>
-<button onclick="restart()">Ulangi</button>
+<h3>yahh, mati.. 😢</h3>
+<button onclick="restart()">ulang lagi</button>
 </div>
 
 <div id="countdownPopup" class="popup"><div id="countdownText">3</div></div>
@@ -185,7 +185,7 @@ window.addEventListener('keydown', e=>{
  if(e.key==='ArrowRight'||e.key==='d') setDirSafe({x:1,y:0});
 });
 
-const msgs=["Hai kamu 😊","Aku seneng banget kenal kamu","Kamu itu berarti buat aku 💖","Aku cuma mau kamu selalu sehat","Aku ada sesuatu buat kamu..."];
+const msgs=["SELAMAT RAFSYAH, KAMU BERHASILL 🤩","selamat ulang tahun yaa Rafsyaah‼️","semoga di pertambahan usia kamu kali ini, kamu tambah baik, ganteng, keren, berprestasi dan bisa lebih dekat lagi ke Allah ﷻ, yaa Rafsyah","kalau kata-kata kamu, 'sukses selalu Rafsyah 😁'","pokoknya wishing all the best prayers upon you..."];
 let mi=0;
 
 function showMessage(text){document.getElementById('message').innerText=text}
@@ -241,10 +241,10 @@ function finish(){
  setTimeout(()=>{
   document.getElementById('final').innerHTML=`
     <div style='font-size:22px;margin-bottom:20px'>
-    aku mungkin ga selalu bilang ini...<br><br>
-    tapi aku bener-bener peduli sama kamu 💖
+    hope you doing well,<br><br>
+    semoga kamu suka yaa rafsyahh⭐
     </div>
-    <button onclick='location.reload()'>Main Lagi 🎮</button>
+    <button onclick='location.reload()'>balik ke awal lagi 🎮</button>
   `;
  },1200);
 }
