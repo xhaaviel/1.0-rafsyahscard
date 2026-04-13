@@ -196,7 +196,7 @@ window.addEventListener('keydown',e=>{
  if(e.key==='ArrowRight'||e.key==='d') setDirSafe({x:1,y:0});
 });
 
-const msgs=["yEAY, KAMU BERHASILL 🤩","selamat ulang tahun yaa Rafsyaah‼️","semoga di pertambahan usia kamu kali ini, kamu tambah baik, ganteng, keren, berprestasi dan bisa lebih dekat lagi ke Allah ﷻ","kalau kata kamu, 'sukses selalu Rafsyah 😁'","pokoknya wishing all the best prayers upon you 💫..."];
+const msgs=["yEAY, KAMU BERHASILL 🤩","selamat ulang tahun yaa Rafsyaah‼️","semoga di pertambahan usia kamu kali ini, kamu tambah baik, ganteng, keren, berprestasi dan bisa lebih dekat lagi ke Allah ﷻ","kalau kata kamu, 'sukses selalu Rafsyah 😁'","pokoknya wishing all the best prayers upon you... 💫"];
 let mi=0;
 
 function showMessage(t){document.getElementById('message').innerText=t}
@@ -242,7 +242,7 @@ function confetti(){
 function finish(){
  document.body.innerHTML=`<div class='final-screen' id='final'></div>`;
  setTimeout(()=>{
-  document.getElementById('final').innerHTML=`<div style='font-size:22px'>semoga kamu suka yaa 💖</div><button onclick='location.reload()'>ulang 🎮</button>`;
+  document.getElementById('final').innerHTML=`<div style='font-size:22px'>hope you always doing well, and easily acomplish good things in your life. in other words, semoga kamu suka yaa 💖</div><button onclick='location.reload()'>ulang 🎮</button>`;
  },1200);
 }
 window.finish=finish;
