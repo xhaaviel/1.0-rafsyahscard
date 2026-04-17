@@ -94,7 +94,7 @@ let audioUnlocked=false;
 function unlockAudio(){
  if(audioUnlocked) return;
  audioUnlocked=true;
- [clickSound,countSound,goSound].forEach(a=>{
+ [clickSound, countSound, goSound, loseSound, winSound].forEach(a=>{
   a.muted=true;
   a.play().then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>{});
  });
@@ -102,16 +102,15 @@ function unlockAudio(){
 
 function safePlay(a){if(a&&audioUnlocked){a.currentTime=0;a.play().catch(()=>{})}}
 
-window.addEventListener("click",e=>{
- unlockAudio();
- if(e.target.tagName==='BUTTON') window.addEventListener("click",e=>{
+window.addEventListener("click", e => {
   unlockAudio();
-  if(e.target.tagName==='BUTTON'){
+
+  if (e.target.tagName === 'BUTTON') {
     safePlay(clickSound);
     vibrate(20);
   }
 });
-
+ 
 function vibrate(ms=50){
  if(navigator.vibrate) navigator.vibrate(ms);
  else{
