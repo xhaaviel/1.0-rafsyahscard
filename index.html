@@ -100,8 +100,14 @@ function unlockAudio(){
  });
 }
 
-function safePlay(a){if(a&&audioUnlocked){a.currentTime=0;a.play().catch(()=>{})}}
-
+function safePlay(audio){
+  if(audio && audioUnlocked){
+    audio.pause();
+    audio.currentTime = 0;
+    audio.play().catch(()=>{});
+  }
+}
+ 
 window.addEventListener("click", e => {
   unlockAudio();
 
@@ -136,23 +142,38 @@ function startGame(){
 window.startGame=startGame;
 
 function countdown(){
- let c=3;let el=document.getElementById('countdownText');let pop=document.getElementById('countdownPopup');
+ let c=3;
+ let el=document.getElementById('countdownText');
+ let pop=document.getElementById('countdownPopup');
+
  pop.classList.add('show');
  main.classList.add('blur');
+
+ el.innerText = c; // tampilkan awal dulu
+
  let i=setInterval(()=>{
-  safePlay(countSound);vibrate(30);
   c--;
-  if(c>0) el.innerText=c;
-  else if(c===0){el.innerText='GO!';safePlay(goSound);vibrate(80)}
+
+  if(c > 0){
+    el.innerText = c;
+    safePlay(countSound);
+    vibrate(30);
+  }
+  else if(c === 0){
+    el.innerText = "GO!";
+    safePlay(goSound);
+    vibrate(80);
+  }
   else{
     clearInterval(i);
     pop.classList.remove('show');
     main.classList.remove('blur');
     setTimeout(()=>{run=true;loop()},100);
   }
+
  },800);
 }
-
+ 
 function random(){return{x:Math.floor(Math.random()*15),y:Math.floor(Math.random()*15)}}
 function loop(){if(!run)return;update();setTimeout(loop,150)}
 
