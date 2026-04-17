@@ -71,9 +71,11 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 <div id="popup" class="popup"><h3>yahh mati 😢</h3><button onclick="restart()">ulang</button></div>
 <div id="countdownPopup" class="popup"><div id="countdownText">3</div></div>
 
-<audio id="clickSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_4015f0b9f8.mp3"></audio>
-<audio id="countSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8c8a73467.mp3"></audio>
-<audio id="goSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2b6b9e6f6b.mp3"></audio>
+<audio id="clickSound" src="sound/click.mp3"></audio>
+<audio id="countSound" src="sound/count.mp3"></audio>
+<audio id="goSound" src="sound/go.mp3"></audio>
+<audio id="loseSound" src="sound/lose.mp3"></audio>
+<audio id="winSound" src="sound/win.mp3"></audio>
  
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
@@ -84,6 +86,8 @@ for(let i=0;i<80;i++){let s=document.createElement('div');s.className='star';s.s
 const clickSound=document.getElementById('clickSound');
 const countSound=document.getElementById('countSound');
 const goSound=document.getElementById('goSound');
+const loseSound = document.getElementById('loseSound');
+const winSound = document.getElementById('winSound');
 
 // AUDIO UNLOCK
 let audioUnlocked=false;
@@ -100,7 +104,12 @@ function safePlay(a){if(a&&audioUnlocked){a.currentTime=0;a.play().catch(()=>{})
 
 window.addEventListener("click",e=>{
  unlockAudio();
- if(e.target.tagName==='BUTTON') safePlay(clickSound);
+ if(e.target.tagName==='BUTTON') window.addEventListener("click",e=>{
+  unlockAudio();
+  if(e.target.tagName==='BUTTON'){
+    safePlay(clickSound);
+    vibrate(20);
+  }
 });
 
 function vibrate(ms=50){
@@ -151,7 +160,9 @@ function loop(){if(!run)return;update();setTimeout(loop,150)}
 function update(){
  let h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
  if(h.x<0||h.y<0||h.x>14||h.y>14||snake.some(s=>s.x===h.x&&s.y===h.y)){
-  run=false;vibrate(200);
+  run=false;
+  safePlay(loseSound);
+  vibrate(200);
   document.getElementById('popup').classList.add('show');return;
  }
  snake.unshift(h);
