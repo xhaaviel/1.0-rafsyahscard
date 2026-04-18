@@ -23,6 +23,45 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 .popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:rgba(0,0,0,0.9);padding:25px;border-radius:20px;text-align:center;transition:0.3s;z-index:10}
 .popup.show{transform:translate(-50%,-50%) scale(1)}
 #countdownText{font-size:60px;font-weight:bold}
+/* judul aman (tidak ketutup) */
+.journal-title{
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: rgba(15,15,30,0.8);
+  backdrop-filter: blur(10px);
+  padding: 10px;
+  border-radius: 15px;
+}
+
+/* scroll lebih aman */
+.scroll-3d{
+  max-height: 420px;
+  overflow-y: auto;
+  padding-bottom: 100px;
+}
+
+/* tombol next */
+.next-btn{
+  position: sticky;
+  bottom: 10px;
+  display: block;
+  margin: 10px auto;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.4s;
+}
+
+/* muncul */
+.next-btn.show{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* hidden default */
+.hidden{
+  display: none;
+}
 .scroll-3d{max-height:450px;overflow-y:auto;perspective:800px}
 .scroll-3d{
   -webkit-overflow-scrolling: touch;
@@ -105,7 +144,11 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 </div>
 
 <div id="journalScreen" class="card hidden">
-<h4>aku nemu ini buat kamu, ayo dibaca‼️📄</h4>
+  
+ <h4>class="journal-title">
+   aku nemu ini buat kamu, ayo dibaca‼️📄
+ </h4>
+  
 <div class="scroll-3d" id="scrollArea">
 <div class="scroll-item"><img src="img/img1.jpg"></div>
 <div class="scroll-item"><img src="img/img2.jpg"></div>
@@ -149,7 +192,9 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
   </p>
 </div>
 <p>for the sake of your health, ayo berhenti pelan-pelan yaa rafsyaah 🥲</p>
-<button onclick="finish()">▶️</button>
+  <button id="nextBtn" onclick="finish()" class="next-btn hidden">
+    ▶️ lanjut
+  </button>
 </div>
 </div>
 
@@ -334,30 +379,43 @@ function transition(target){
 
 const scrollArea = document.getElementById('scrollArea');
 
+// scroll effect (yang lama)
 scrollArea.addEventListener('scroll', () => {
   const items = scrollArea.querySelectorAll('.scroll-item');
   const center = scrollArea.scrollTop + scrollArea.clientHeight / 2;
 
   items.forEach(item => {
-  const img = item.querySelector("img");
+    const img = item.querySelector("img");
 
-  // ✅ TAMBAHKAN INI
-  if (!img || !img.complete) return;
+    if (!img || !img.complete) return;
 
-  // kalau gambar terlalu tinggi → skip 3D
-  if (img.naturalHeight > 1200) {
-  item.style.transform = "none";
-  item.style.opacity = 1;
-  return;
-}
+    if (img.naturalHeight > 1200) {
+      item.style.transform = "none";
+      item.style.opacity = 1;
+      return;
+    }
+
     const rect = item.offsetTop + item.clientHeight / 2;
     const dist = rect - center;
 
     item.style.transform = `rotateX(${dist * 0.05}deg) scale(${1 - Math.min(Math.abs(dist)/600, 0.3)})`;
     item.style.opacity = 1 - Math.min(Math.abs(dist)/400, 0.6);
   });
+});
 
-}); // ✅ WAJIB ADA INI
+
+// 🔥 SMART BUTTON (TARUH DI SINI, TERPISAH)
+const nextBtn = document.getElementById("nextBtn");
+
+scrollArea.addEventListener("scroll", () => {
+  const scrollTop = scrollArea.scrollTop;
+  const maxScroll = scrollArea.scrollHeight - scrollArea.clientHeight;
+
+  if (scrollTop / maxScroll > 0.85) {
+    nextBtn.classList.add("show");
+    nextBtn.classList.remove("hidden");
+  }
+});
  
 function confetti(){
  for(let i=0;i<100;i++){
