@@ -30,6 +30,28 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 .confetti{position:fixed;width:6px;height:6px;top:-10px;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(100vh) rotate(360deg)}}
 .tutorial{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);padding:10px 15px;border-radius:15px}
+.viewer{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background:rgba(0,0,0,0.95);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+.viewer img{
+  max-width:90%;
+  max-height:90%;
+  transition:0.3s;
+}
+
+.viewer.hidden{
+  display:none;
+}
 </style>
 </head>
 <body>
@@ -246,27 +268,34 @@ function transition(target){
  },500);
 }
 
-const scrollArea=document.getElementById('scrollArea');
-scrollArea.addEventListener('scroll',()=>{
- const items=scrollArea.querySelectorAll('.scroll-item');
- const center=scrollArea.scrollTop+scrollArea.clientHeight/2;
- items.forEach(item=>{
+const scrollArea = document.getElementById('scrollArea');
+
+scrollArea.addEventListener('scroll', () => {
+  const items = scrollArea.querySelectorAll('.scroll-item');
+  const center = scrollArea.scrollTop + scrollArea.clientHeight / 2;
+
+  items.forEach(item => {
   const img = item.querySelector("img");
 
+  // ✅ TAMBAHKAN INI
+  if (!img || !img.complete) return;
+
   // kalau gambar terlalu tinggi → skip 3D
-  if(img.naturalHeight > 1500){
-    item.style.transform = "none";
-    item.style.opacity = 1;
-    return;
-  }
+  if (img.naturalHeight > 1500) {
+      item.style.transform = "none";
+      item.style.opacity = 1;
+      return;
+    }
 
-  const rect=item.offsetTop+item.clientHeight/2;
-  const dist=rect-center;
+    const rect = item.offsetTop + item.clientHeight / 2;
+    const dist = rect - center;
 
-  item.style.transform=`rotateX(${dist*0.05}deg) scale(${1-Math.min(Math.abs(dist)/600,0.3)})`;
-  item.style.opacity=1-Math.min(Math.abs(dist)/400,0.6);
-});
+    item.style.transform = `rotateX(${dist * 0.05}deg) scale(${1 - Math.min(Math.abs(dist)/600, 0.3)})`;
+    item.style.opacity = 1 - Math.min(Math.abs(dist)/400, 0.6);
+  });
 
+}); // ✅ WAJIB ADA INI
+ 
 function confetti(){
  for(let i=0;i<100;i++){
   let c=document.createElement('div');
@@ -287,8 +316,29 @@ function finish(){
 }
 window.finish=finish;
 
+function initViewer(){
+  const viewer = document.getElementById("imageViewer");
+  const viewerImg = document.getElementById("viewerImg");
+
+  const images = Array.from(document.querySelectorAll(".scroll-item img"));
+
+  images.forEach((img, index)=>{
+    img.addEventListener("click", ()=>{
+      viewerImg.src = img.src;
+      viewer.classList.remove("hidden");
+    });
+  });
+
+  viewer.addEventListener("click", ()=>{
+    viewer.classList.add("hidden");
+  });
+}
+ initViewer();
 });
 </script>
 
 </body>
+ <div id="imageViewer" class="viewer hidden">
+  <img id="viewerImg">
+</div>
 </html>
