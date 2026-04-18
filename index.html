@@ -57,8 +57,8 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 }
 
 .scroll-3d{
-  margin-top: 80px;
-  padding-top: 10px;
+  margin-top: 20px;
+  padding-top: 5px;
   padding-bottom: 120px;
 }
 /* tombol next */
@@ -430,9 +430,16 @@ const nextBtn = document.getElementById("nextBtn");
 
 scrollArea.addEventListener("scroll", () => {
   const scrollTop = scrollArea.scrollTop;
-  const maxScroll = scrollArea.scrollHeight - scrollArea.clientHeight;
+  const visible = scrollTop + scrollArea.clientHeight;
+  const total = scrollArea.scrollHeight;
 
-  if (scrollTop / maxScroll > 0.85) {
+  if (visible >= total - 50) {
+    nextBtn.classList.add("show");
+    nextBtn.classList.remove("hidden");
+  }
+});
+
+  if (scrollTop + scrollArea.clientHeight >= scrollArea.scrollHeight - 50) {
     nextBtn.classList.add("show");
     nextBtn.classList.remove("hidden");
   }
