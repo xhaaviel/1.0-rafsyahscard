@@ -307,7 +307,7 @@ function startGame(){
   tutorial.classList.remove('hidden');
   setTimeout(()=>tutorial.classList.add('hidden'),2500);
   snake=[{x:7,y:7}];
-  dir={x:1,y:0};
+  dir = null;
   food=random();
   score=0;
   scoreEl.innerText=0;
@@ -356,7 +356,13 @@ function loop(){
   setTimeout(loop,150);
 }
 function update(){
- let h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
+
+ if(!dir) return; // 🔥 tunggu input dulu
+
+ let h = {
+   x: snake[0].x + dir.x,
+   y: snake[0].y + dir.y
+ };
  if(h.x<0||h.y<0||h.x>14||h.y>14||snake.some(s=>s.x===h.x&&s.y===h.y)){
   run=false;
   safePlay(loseSound);
@@ -392,7 +398,14 @@ function draw(){ctx.fillStyle='#000';ctx.fillRect(0,0,300,300);ctx.font='18px Ar
 function restart(){document.getElementById('popup').classList.remove('show');startGame()}
 window.restart=restart;
 
-function setDirSafe(n){if(dir&&(dir.x+n.x===0&&dir.y+n.y===0))return;dir=n}
+function setDirSafe(n){
+ if(!dir){
+   dir = n; // pertama kali boleh langsung
+   return;
+ }
+ if(dir.x + n.x === 0 && dir.y + n.y === 0) return;
+ dir = n;
+}
 
 // --- MOBILE SWIPE FIX ---
 let sx=0, sy=0;
