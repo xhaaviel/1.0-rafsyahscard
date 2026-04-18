@@ -498,9 +498,17 @@ card.addEventListener("scroll", () => {
   }
 });
   
-document.getElementById("startBtn").addEventListener("click", ()=>{
+document.getElementById("startBtn").addEventListener("click", (e)=>{
+  unlockAudio();
+
+  const bgm = document.getElementById('bgm');
+  bgm.currentTime = 0;
+  bgm.volume = 0.4;
+
+  // 🔥 PLAY LANGSUNG DI USER CLICK
+  bgm.play().catch(()=>{});
+
   startGame();
-  bgmPlay();
 });
   
 initViewer(); // terakhir
