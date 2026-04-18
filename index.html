@@ -469,22 +469,6 @@ card.addEventListener("scroll", () => {
   }
 });
 });
-
-
-// 🔥 SMART BUTTON (TARUH DI SINI, TERPISAH)
-const nextBtn = document.getElementById("nextBtn");
-
-scrollArea.addEventListener("scroll", () => {
-  const scrollTop = scrollArea.scrollTop;
-  const visible = scrollTop + scrollArea.clientHeight;
-  const total = scrollArea.scrollHeight;
-
-  if (visible >= total - 50) {
-    nextBtn.classList.add("show");
-    nextBtn.classList.remove("hidden");
-  }
-});
-
  
 function confetti(){
  for(let i=0;i<100;i++){
