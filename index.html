@@ -29,7 +29,6 @@ body{margin:0;font-family:'Quicksand',sans-serif;background:#0f0f1a;color:white;
   padding-top: 30px;
   padding-bottom: 40px;
 }
-}
 .fade-card{opacity:0;animation:fadeInCard 0.8s forwards}
 @keyframes fadeInCard{to{opacity:1}}
 button{margin:5px;padding:12px 20px;border:none;border-radius:15px;background: linear-gradient(45deg,#ff6b81,#ff9a9e);color:white;cursor:pointer;font-family:'Nunito'}
@@ -247,11 +246,24 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
  
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
-  initViewer(); // ✅ cuma di sini
-});
-// stars
-for(let i=0;i<80;i++){let s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';document.body.appendChild(s)}
-
+  
+// ⭐ stars
+  for(let i=0;i<80;i++){
+    let s=document.createElement('div');
+    s.className='star';
+    s.style.left=Math.random()*100+'vw';
+    s.style.top=Math.random()*100+'vh';
+    document.body.appendChild(s);
+  }
+  
+// ⭐ semua const
+  const canvas=document.getElementById('gameCanvas');
+  const ctx=canvas.getContext('2d');
+  const scoreEl=document.getElementById('score');
+  const main=document.getElementById('main');
+  const tutorial=document.getElementById('tutorial');
+  const card = document.getElementById('journalScreen');
+  const nextBtn = document.getElementById("nextBtn");
 const clickSound=document.getElementById('clickSound');
 const countSound=document.getElementById('countSound');
 const goSound=document.getElementById('goSound');
@@ -293,12 +305,6 @@ function vibrate(ms=50){
   setTimeout(()=>document.body.style.transform="",80);
  }
 }
-
-const canvas=document.getElementById('gameCanvas');
-const ctx=canvas.getContext('2d');
-const scoreEl=document.getElementById('score');
-const main=document.getElementById('main');
-const tutorial=document.getElementById('tutorial');
 
 let snake,dir,food,score,run=false;
 
@@ -469,8 +475,11 @@ card.addEventListener("scroll", () => {
     nextBtn.classList.remove("hidden");
   }
 });
+
+initViewer(); // terakhir
+
 });
- 
+  
 function confetti(){
  for(let i=0;i<100;i++){
   let c=document.createElement('div');
