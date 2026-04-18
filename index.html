@@ -16,6 +16,9 @@ body{margin:0;font-family:'Quicksand',sans-serif;background:#0f0f1a;color:white;
 .fade{opacity:0}
 .blur{filter:blur(6px)}
 .card{backdrop-filter: blur(15px);background: rgba(255,255,255,0.08);border-radius:25px;padding:20px;width:320px;box-shadow:0 0 40px rgba(255,105,180,0.2)}
+.card{
+  padding-top: 30px;
+}
 .fade-card{opacity:0;animation:fadeInCard 0.8s forwards}
 @keyframes fadeInCard{to{opacity:1}}
 button{margin:5px;padding:12px 20px;border:none;border-radius:15px;background: linear-gradient(45deg,#ff6b81,#ff9a9e);color:white;cursor:pointer;font-family:'Nunito'}
@@ -42,6 +45,9 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
   }
 }
 
+.journal-title{
+  margin-top: 5px;
+}
 /* scroll lebih aman */
 .scroll-3d{
   max-height: 420px;
@@ -50,7 +56,7 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
   padding-bottom: 100px;
 }
 .scroll-3d{
-  margin-top: 10px;
+  margin-top: 15px;
 }
 /* tombol next */
 .next-btn{
@@ -156,9 +162,9 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 
 <div id="journalScreen" class="card hidden">
   
- <h4> class="journal-title">
-   aku nemu ini buat kamu, ayo dibaca‼️📄
- </h4>
+ <h4 class="journal-title">
+  aku nemu ini buat kamu, ayo dibaca‼️📄
+</h4>
   
 <div class="scroll-3d" id="scrollArea">
 <div class="scroll-item"><img src="img/img1.jpg"></div>
