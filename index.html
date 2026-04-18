@@ -251,11 +251,20 @@ scrollArea.addEventListener('scroll',()=>{
  const items=scrollArea.querySelectorAll('.scroll-item');
  const center=scrollArea.scrollTop+scrollArea.clientHeight/2;
  items.forEach(item=>{
+  const img = item.querySelector("img");
+
+  // kalau gambar terlalu tinggi → skip 3D
+  if(img.naturalHeight > 1500){
+    item.style.transform = "none";
+    item.style.opacity = 1;
+    return;
+  }
+
   const rect=item.offsetTop+item.clientHeight/2;
   const dist=rect-center;
+
   item.style.transform=`rotateX(${dist*0.05}deg) scale(${1-Math.min(Math.abs(dist)/600,0.3)})`;
   item.style.opacity=1-Math.min(Math.abs(dist)/400,0.6);
- });
 });
 
 function confetti(){
