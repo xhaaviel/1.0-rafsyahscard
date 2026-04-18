@@ -23,9 +23,17 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 .popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:rgba(0,0,0,0.9);padding:25px;border-radius:20px;text-align:center;transition:0.3s;z-index:10}
 .popup.show{transform:translate(-50%,-50%) scale(1)}
 #countdownText{font-size:60px;font-weight:bold}
-.scroll-3d{max-height:260px;overflow-y:auto;perspective:800px}
+.scroll-3d{max-height:450px;overflow-y:auto;perspective:800px}
+.scroll-3d{
+  -webkit-overflow-scrolling: touch;
+}
 .scroll-item{margin-bottom:15px;transition:transform 0.2s, opacity 0.2s}
-.scroll-item img{width:100%;border-radius:12px}
+.scroll-item img{
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  display:block;
+}
 .final-screen{position:fixed;top:0;left:0;width:100vw;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background: radial-gradient(circle,#1a1a2e,#000)}
 .confetti{position:fixed;width:6px;height:6px;top:-10px;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(100vh) rotate(360deg)}}
@@ -82,7 +90,7 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 <div class="scroll-item"><img src="img/img7.jpg"></div>
 <div class="scroll-item"><img src="img/img8.jpg"></div>
 <div class="scroll-item"><img src="img/img9.jpg"></div>
-<div class="scroll-item"><img src="img/img10.jpg"></div>
+<div class="scroll-item"><img src="img/img9.jpg" loading="lazy"></div>
 </div>
 <p>for the sake of your health, ayo berhenti pelan-pelan yaa rafsyaah 🥲</p>
 <button onclick="finish()">▶️</button>
@@ -281,12 +289,11 @@ scrollArea.addEventListener('scroll', () => {
   if (!img || !img.complete) return;
 
   // kalau gambar terlalu tinggi → skip 3D
-  if (img.naturalHeight > 1500) {
-      item.style.transform = "none";
-      item.style.opacity = 1;
-      return;
-    }
-
+  if (img.naturalHeight > 1200) {
+  item.style.transform = "none";
+  item.style.opacity = 1;
+  return;
+}
     const rect = item.offsetTop + item.clientHeight / 2;
     const dist = rect - center;
 
