@@ -281,6 +281,9 @@ const bgm = document.getElementById('bgm');
 bgm.volume = 0.3;
 
 // AUDIO UNLOCK
+let a = document.getElementById("bgm");
+a.play();
+  
 let audioUnlocked=false;
 function unlockAudio(){
  if(audioUnlocked) return;
