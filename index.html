@@ -170,7 +170,7 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 <h3>ayoo main dulu 🐍</h3>
 <p>skor kamu: <span id="score">0</span></p>
 <p>target: 5</p>
-<button id="startBtn">gass, mulai</button>
+<button onclick="startGame()">gass, mulai</button>
 <canvas id="gameCanvas" width="300" height="300"></canvas>
 </div>
 
@@ -252,7 +252,6 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 <audio id="goSound" src="sound/go.mp3"></audio>
 <audio id="loseSound" src="sound/lose.mp3"></audio>
 <audio id="winSound" src="sound/win.mp3"></audio>
-<audio id="bgm" src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8b8c1e8e3.mp3" loop></audio>
  
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
@@ -277,8 +276,6 @@ const countSound=document.getElementById('countSound');
 const goSound=document.getElementById('goSound');
 const loseSound = document.getElementById('loseSound');
 const winSound = document.getElementById('winSound');
-const bgm = document.getElementById('bgm');
-bgm.volume = 0.3;
 
 // AUDIO UNLOCK
 let audioUnlocked=false;
@@ -290,20 +287,7 @@ function unlockAudio(){
   a.play().then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>{});
  });
 }
-  
-function bgmPlay(){
-  const bgm = document.getElementById('bgm');
 
-  bgm.currentTime = 0;
-  bgm.volume = 1;
-
-  bgm.play()
-    .then(()=>console.log("✅ BGM PLAYING"))
-    .catch(err=>console.log("❌ BGM ERROR:", err));
-}
-
-window.bgmPlay = bgmPlay; // 🔥 WAJIB
-  
 function safePlay(audio){
   if(audio && audioUnlocked){
     audio.pause();
@@ -497,20 +481,7 @@ card.addEventListener("scroll", () => {
     nextBtn.classList.remove("hidden");
   }
 });
-  
-document.getElementById("startBtn").addEventListener("click", (e)=>{
-  unlockAudio();
 
-  const bgm = document.getElementById('bgm');
-  bgm.currentTime = 0;
-  bgm.volume = 0.4;
-
-  // 🔥 PLAY LANGSUNG DI USER CLICK
-  bgm.play().catch(()=>{});
-
-  startGame();
-});
-  
 initViewer(); // terakhir
 
 });
