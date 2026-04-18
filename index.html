@@ -252,7 +252,7 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 <audio id="goSound" src="sound/go.mp3"></audio>
 <audio id="loseSound" src="sound/lose.mp3"></audio>
 <audio id="winSound" src="sound/win.mp3"></audio>
-<audio id="bgm" src="sound/bgm.mp3" loop></audio>
+<audio id="bgm" src="sound/bgm.mp3" loop preload="auto"></audio>
  
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
@@ -293,7 +293,13 @@ function unlockAudio(){
   
 function bgmPlay(){
   const bgm = document.getElementById('bgm');
-  bgm.play().catch(()=>{});
+
+  bgm.currentTime = 0;
+  bgm.volume = 1;
+
+  bgm.play()
+    .then(()=>console.log("✅ BGM PLAYING"))
+    .catch(err=>console.log("❌ BGM ERROR:", err));
 }
 
 window.bgmPlay = bgmPlay; // 🔥 WAJIB
