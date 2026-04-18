@@ -170,7 +170,7 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 <h3>ayoo main dulu 🐍</h3>
 <p>skor kamu: <span id="score">0</span></p>
 <p>target: 5</p>
-<button onclick="startGame()">gass, mulai</button>
+<button onclick="startGame(); bgmPlay()">gass, mulai</button>
 <canvas id="gameCanvas" width="300" height="300"></canvas>
 </div>
 
@@ -290,6 +290,11 @@ function unlockAudio(){
   a.play().then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>{});
  });
 }
+  
+function bgmPlay(){
+  const bgm = document.getElementById('bgm');
+  bgm.play().catch(()=>{});
+}  
   
 function safePlay(audio){
   if(audio && audioUnlocked){
