@@ -15,8 +15,18 @@ body{margin:0;font-family:'Quicksand',sans-serif;background:#0f0f1a;color:white;
 .container{display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;text-align:center;transition:0.5s}
 .fade{opacity:0}
 .blur{filter:blur(6px)}
-.card{backdrop-filter: blur(15px);background: rgba(255,255,255,0.08);border-radius:25px;padding:20px;width:320px;box-shadow:0 0 40px rgba(255,105,180,0.2)}
 .card{
+  backdrop-filter: blur(15px);
+  background: rgba(255,255,255,0.08);
+  border-radius:25px;
+  padding:20px;
+  width:320px;
+  box-shadow:0 0 40px rgba(255,105,180,0.2);
+
+  /* 🔥 TAMBAHAN INI */
+  max-height: 90vh;
+  overflow-y: auto;
+}
   padding-top: 30px;
 }
 .fade-card{opacity:0;animation:fadeInCard 0.8s forwards}
@@ -36,7 +46,7 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
   backdrop-filter: blur(10px);
   padding: 12px 10px;
   border-radius: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 @media (max-width: 768px){
@@ -45,18 +55,10 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
   }
 }
 
-.journal-title{
-  margin-top: 5px;
-}
-/* scroll lebih aman */
-.scroll-3d{
-  max-height: 420px;
-  overflow-y: auto;
-  padding-top: 10px;   /* 👈 ini penting */
-  padding-bottom: 100px;
-}
 .scroll-3d{
   margin-top: 15px;
+  padding-top: 10px;
+  padding-bottom: 80px;
 }
 /* tombol next */
 .next-btn{
