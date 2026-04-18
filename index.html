@@ -353,15 +353,17 @@ function update(){
   vibrate(200);
   document.getElementById('popup').classList.add('show');return;
  }
- snake.unshift(h);
- if(h.x===food.x&&h.y===food.y){
+snake.unshift(h);
+
+if(h.x===food.x&&h.y===food.y){
   score++;
   scoreEl.innerText=score;
 
-  // 🔥 feedback makan apel
   vibrate(60);
 
   food=random();
+}else{
+  snake.pop(); // 🔥 INI YANG HILANG
 }
  if(score>=5){
   run=false;
