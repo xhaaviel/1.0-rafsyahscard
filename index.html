@@ -24,18 +24,22 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 .popup.show{transform:translate(-50%,-50%) scale(1)}
 #countdownText{font-size:60px;font-weight:bold}
 /* judul aman (tidak ketutup) */
-@media (max-width: 768px){
-  .journal-title{
-    position: sticky;
-    top: 0;
-    z-index: 999;  /* lebih tinggi lagi */
-  }
-}                 /* lebih tinggi dari konten */
-  background: rgba(15,15,30,0.95); /* solid-ish biar ga tembus */
+.journal-title{
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  background: rgba(15,15,30,0.95);
   backdrop-filter: blur(10px);
   padding: 12px 10px;
   border-radius: 15px;
   margin-bottom: 10px;
+}
+
+@media (max-width: 768px){
+  .journal-title{
+    top: 0;
+  }
 }
 
 /* scroll lebih aman */
@@ -45,7 +49,9 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
   padding-top: 10px;   /* 👈 ini penting */
   padding-bottom: 100px;
 }
-
+.scroll-3d{
+  margin-top: 10px;
+}
 /* tombol next */
 .next-btn{
   position: sticky;
@@ -150,7 +156,7 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 
 <div id="journalScreen" class="card hidden">
   
- <h4>class="journal-title">
+ <h4> class="journal-title">
    aku nemu ini buat kamu, ayo dibaca‼️📄
  </h4>
   
