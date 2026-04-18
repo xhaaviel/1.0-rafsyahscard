@@ -463,9 +463,6 @@ function transition(target){
  },500);
 }
 
-const card = document.getElementById('journalScreen');
-const nextBtn = document.getElementById("nextBtn");
-
 card.addEventListener("scroll", () => {
   const visible = card.scrollTop + card.clientHeight;
   const total = card.scrollHeight;
