@@ -262,8 +262,6 @@ document.addEventListener("DOMContentLoaded",()=>{
   const scoreEl=document.getElementById('score');
   const main=document.getElementById('main');
   const tutorial=document.getElementById('tutorial');
-  const card = document.getElementById('journalScreen');
-  const nextBtn = document.getElementById("nextBtn");
 const clickSound=document.getElementById('clickSound');
 const countSound=document.getElementById('countSound');
 const goSound=document.getElementById('goSound');
@@ -462,7 +460,9 @@ function transition(target){
   if(target==='messageScreen') showMessage(msgs[0]);
  },500);
 }
-
+const card = document.getElementById('journalScreen');
+const nextBtn = document.getElementById("nextBtn");
+  
 card.addEventListener("scroll", () => {
   const visible = card.scrollTop + card.clientHeight;
   const total = card.scrollHeight;
