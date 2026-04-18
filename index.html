@@ -290,10 +290,6 @@ function unlockAudio(){
   a.play().then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>{});
  });
 }
-
-  function startBGM(){
-  bgm.play().catch(()=>{});
-}
   
 function safePlay(audio){
   if(audio && audioUnlocked){
