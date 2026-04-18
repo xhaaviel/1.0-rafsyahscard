@@ -252,6 +252,7 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 <audio id="goSound" src="sound/go.mp3"></audio>
 <audio id="loseSound" src="sound/lose.mp3"></audio>
 <audio id="winSound" src="sound/win.mp3"></audio>
+<audio id="bgm" src="sound/bgm.mp3" loop></audio>
  
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
@@ -276,6 +277,8 @@ const countSound=document.getElementById('countSound');
 const goSound=document.getElementById('goSound');
 const loseSound = document.getElementById('loseSound');
 const winSound = document.getElementById('winSound');
+const bgm = document.getElementById('bgm');
+bgm.volume = 0.3;
 
 // AUDIO UNLOCK
 let audioUnlocked=false;
@@ -288,6 +291,10 @@ function unlockAudio(){
  });
 }
 
+  function startBGM(){
+  bgm.play().catch(()=>{});
+}
+  
 function safePlay(audio){
   if(audio && audioUnlocked){
     audio.pause();
@@ -298,6 +305,7 @@ function safePlay(audio){
  
 window.addEventListener("click", e => {
   unlockAudio();
+  startBGM(); // 🔥 DI SINI
 
   if (e.target.tagName === 'BUTTON') {
     safePlay(clickSound);
