@@ -456,30 +456,18 @@ function transition(target){
  },500);
 }
 
-const scrollArea = document.getElementById('scrollArea');
+const card = document.getElementById('journalScreen');
+const nextBtn = document.getElementById("nextBtn");
 
-// scroll effect (yang lama)
-scrollArea.addEventListener('scroll', () => {
-  const items = scrollArea.querySelectorAll('.scroll-item');
-  const center = scrollArea.scrollTop + scrollArea.clientHeight / 2;
+card.addEventListener("scroll", () => {
+  const visible = card.scrollTop + card.clientHeight;
+  const total = card.scrollHeight;
 
-  items.forEach(item => {
-    const img = item.querySelector("img");
-
-    if (!img || !img.complete) return;
-
-    if (img.naturalHeight > 1200) {
-      item.style.transform = "none";
-      item.style.opacity = 1;
-      return;
-    }
-
-    const rect = item.offsetTop + item.clientHeight / 2;
-    const dist = rect - center;
-
-    item.style.transform = `rotateX(${dist * 0.05}deg) scale(${1 - Math.min(Math.abs(dist)/600, 0.3)})`;
-    item.style.opacity = 1 - Math.min(Math.abs(dist)/400, 0.6);
-  });
+  if (visible >= total - 50) {
+    nextBtn.classList.add("show");
+    nextBtn.classList.remove("hidden");
+  }
+});
 });
 
 
