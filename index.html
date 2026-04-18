@@ -28,6 +28,7 @@ body{margin:0;font-family:'Quicksand',sans-serif;background:#0f0f1a;color:white;
   overflow-y: auto;
 }
   padding-top: 30px;
+  padding-bottom: 40px; /* 🔥 tambahan */
 }
 .fade-card{opacity:0;animation:fadeInCard 0.8s forwards}
 @keyframes fadeInCard{to{opacity:1}}
@@ -40,11 +41,11 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 .journal-title{
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 10;
 
   background: rgba(15,15,30,0.95);
   backdrop-filter: blur(10px);
-  padding: 12px 10px;
+  padding: 12px;
   border-radius: 15px;
   margin-bottom: 15px;
 }
@@ -56,7 +57,7 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 }
 
 .scroll-3d{
-  margin-top: 15px;
+  margin-top: 80px;
   padding-top: 10px;
   padding-bottom: 80px;
 }
@@ -117,6 +118,7 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 .citation{
   border-top:1px solid rgba(255,255,255,0.1);
   padding-top:10px;
+  margin-bottom: 60px;
 }
 .final-screen{position:fixed;top:0;left:0;width:100vw;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background: radial-gradient(circle,#1a1a2e,#000)}
 .confetti{position:fixed;width:6px;height:6px;top:-10px;animation:fall linear forwards}
