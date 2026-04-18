@@ -285,7 +285,7 @@ let audioUnlocked=false;
 function unlockAudio(){
  if(audioUnlocked) return;
  audioUnlocked=true;
- [clickSound, countSound, goSound, loseSound, winSound].forEach(a=>{
+ [clickSound, countSound, goSound, loseSound, winSound, bgm].forEach(a=>{
   a.muted=true;
   a.play().then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>{});
  });
@@ -305,7 +305,10 @@ function safePlay(audio){
  
 window.addEventListener("click", e => {
   unlockAudio();
-  startBGM(); // 🔥 DI SINI
+
+  if(bgm.paused){
+    bgm.play().catch(()=>{});
+  }
 
   if (e.target.tagName === 'BUTTON') {
     safePlay(clickSound);
