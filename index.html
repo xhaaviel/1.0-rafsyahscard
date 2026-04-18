@@ -302,10 +302,16 @@ const tutorial=document.getElementById('tutorial');
 let snake,dir,food,score,run=false;
 
 function startGame(){
- unlockAudio();
- tutorial.classList.remove('hidden');
- setTimeout(()=>tutorial.classList.add('hidden'),2500);
- snake=[{x:7,y:7}];dir={x:1,y:0};food=random();score=0;scoreEl.innerText=0;countdown();
+  run = false; // reset dulu
+  unlockAudio();
+  tutorial.classList.remove('hidden');
+  setTimeout(()=>tutorial.classList.add('hidden'),2500);
+  snake=[{x:7,y:7}];
+  dir={x:1,y:0};
+  food=random();
+  score=0;
+  scoreEl.innerText=0;
+  countdown();
 }
 window.startGame=startGame;
 
