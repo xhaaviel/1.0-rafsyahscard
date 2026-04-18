@@ -365,17 +365,16 @@ function update(){
 }
  if(score>=5){
   run=false;
-
-  // 🎉 effect menang
   safePlay(winSound);
   vibrate(200);
   confetti();
 
-  // delay biar cinematic
   setTimeout(()=>{
     transition('messageScreen');
   },1200);
 }
+
+} // ✅ PENUTUP update()
 
 function draw(){ctx.fillStyle='#000';ctx.fillRect(0,0,300,300);ctx.font='18px Arial';ctx.fillText('🍎',food.x*20,food.y*20+15);snake.forEach(s=>{ctx.fillStyle='#0f0';ctx.fillRect(s.x*20,s.y*20,18,18)})}
 function restart(){document.getElementById('popup').classList.remove('show');startGame()}
@@ -520,9 +519,10 @@ function initViewer(){
  initViewer();
 });
 </script>
-
-</body>
- <div id="imageViewer" class="viewer hidden">
+  
+<div id="imageViewer" class="viewer hidden">
   <img id="viewerImg">
+</div>
+</body>
 </div>
 </html>
