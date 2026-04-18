@@ -27,17 +27,19 @@ canvas{background:#000;border-radius:15px;margin-top:10px}
 .journal-title{
   position: sticky;
   top: 0;
-  z-index: 5;
-  background: rgba(15,15,30,0.8);
+  z-index: 20;                 /* lebih tinggi dari konten */
+  background: rgba(15,15,30,0.95); /* solid-ish biar ga tembus */
   backdrop-filter: blur(10px);
-  padding: 10px;
+  padding: 12px 10px;
   border-radius: 15px;
+  margin-bottom: 10px;
 }
 
 /* scroll lebih aman */
 .scroll-3d{
   max-height: 420px;
   overflow-y: auto;
+  padding-top: 10px;   /* 👈 ini penting */
   padding-bottom: 100px;
 }
 
