@@ -281,14 +281,11 @@ const bgm = document.getElementById('bgm');
 bgm.volume = 0.3;
 
 // AUDIO UNLOCK
-let a = document.getElementById("bgm");
-a.play();
-  
 let audioUnlocked=false;
 function unlockAudio(){
  if(audioUnlocked) return;
  audioUnlocked=true;
- [clickSound, countSound, goSound, loseSound, winSound, bgm].forEach(a=>{
+ [clickSound, countSound, goSound, loseSound, winSound].forEach(a=>{
   a.muted=true;
   a.play().then(()=>{a.pause();a.currentTime=0;a.muted=false}).catch(()=>{});
  });
@@ -296,8 +293,14 @@ function unlockAudio(){
   
 function bgmPlay(){
   const bgm = document.getElementById('bgm');
-  bgm.play().catch(()=>{});
-}  
+
+  bgm.currentTime = 0;
+  bgm.volume = 1;
+
+  bgm.play()
+    .then(()=>console.log("BGM PLAYING"))
+    .catch(err=>console.log("ERROR:", err));
+}
   
 function safePlay(audio){
   if(audio && audioUnlocked){
@@ -309,10 +312,6 @@ function safePlay(audio){
  
 window.addEventListener("click", e => {
   unlockAudio();
-
-  if(bgm.paused){
-    bgm.play().catch(()=>{});
-  }
 
   if (e.target.tagName === 'BUTTON') {
     safePlay(clickSound);
